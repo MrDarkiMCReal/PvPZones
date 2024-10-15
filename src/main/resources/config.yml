@@ -1,0 +1,119 @@
+#Plugin made by MrDarkiMC
+#You can access only this materials https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+#Type is ID of a slot where you want your item to be equipped. For example
+#39 is a head slot
+#38 is a chestplate slot
+#37 is a leggings slot
+#36 is a boots slot
+#
+#For any help join discord
+#
+location:
+  world: "pvp_world" #world to pvp (only in this world instant respawn and   gonna work)
+  x: 20 #respawning coords
+  y: 25 #respawning coords
+  z: 30 #respawning coords
+  yaw: 0.0 #respawning direction
+  pitch: 0.0 #respawning direction
+Worldguard:
+  regionToEquip: "pvp-arena"
+killstreak:
+  enable: true
+  send_killstreakMessage_every_time_player_kills_a_victim: false
+  messages: true
+endKillStreakEnable: true
+messages:
+  toKiller:
+    enable: true
+    message: "&7You killed player: &6%victim%"
+  toDiedPlayer:
+    enable: true
+    message: "&7You have been killed by: &c%killer%"
+  broadcast:
+    enable: true
+    message: "&6%killer% &7 just slay &c %victim%"
+  playerLeavePvPArea:
+    enable: true
+    message: "You have left pvp area"
+  killstreak:
+    5: "Player %killer% is on rampage with streak of: %killstreak%"
+    10: "HOLLY COW, %killer% is DOMINATING with streak of: %killstreak%"
+    15: "SOMEBODY STOP %killer% WITH A KILLSTREAK OF: %killstreak%"
+  endKillStreak:
+    5: "Player %killer% ended %victim%'s killstreak of: %killstreak%"
+    10: "Player %killer% finally stopped %victim%'s killstreak of: %killstreak%"
+    15: "%player% the god of killstreak of %killstreak% was slain by %killer%"
+sound_effect:
+  enable: true
+  sound_type: "ENTITY_ARROW_HIT_PLAYER"
+  volume: 1.0
+  pitch: 1.0
+healAfterKill:
+  enable: true
+  amount: 5
+particles:
+  onKillParticle:
+    enable: true
+    particle_type: "SOUL_FIRE_FLAME"
+    amount: 10
+    speed: 0.03
+    offsetX: 0.1
+    offsetY: 0.3
+    offsetZ: 0.1
+  onKillStreakParticle:
+    enable: true
+    killsToKillStreak: 5
+    particle_type: "FLAME"
+    amount: 10
+    speed: 0.03
+    offsetX: 0.1
+    offsetY: 0.3
+    offsetZ: 0.1
+Single-Item-Groups:
+  MyCustomSwordSkins:
+    DefaultSword: IRON_SWORD 1 type:0 modeldata:0
+    KatanaSword: IRON_SWORD 1 type:0 modeldata:12345
+  CustomHats:
+    DefaultHat: AIR 1 type:39
+    SamuraiHat: IRON_HELMET 1 type:39 modeldata:12345
+  CustomChestPlates:
+    DefaultChest: IRON_CHESTPLATE 1 type:38
+    SamuraiChest: IRON_CHESTPLATE 1 type:38 modeldata:12345
+  CustomLeggings:
+    DefaultLegs: IRON_LEGGINGS 1 type:37
+    SamuraiLegs: IRON_LEGGINGS 1 type:37 modeldata:12345
+  CustomBoots:
+    DefaultBoots: IRON_BOOTS 1 type:36
+    SamuraiBoots: IRON_BOOTS 1 type:36 modeldata:12345
+  ##########################################################
+  MythicSwordSkins:
+    DefaultSword: itemsadder:dmc:MythicSword 1 type:0
+    KatanaSword: itemsadder:dmc:MythicSword 1 type:0
+  MythicHats:
+    DefaultHat: itemsadder:dmc:MythicHead 1 type:39
+    SamuraiHat: itemsadder:dmc:RareMythicHead 1 type:39
+  MythicChestPlates:
+    DefaultChest: itemsadder:dmc:MythicChest 1 type:38
+    SamuraiChest: itemsadder:dmc:RareMythicChest 1 type:38
+  MythicLeggings:
+    DefaultLegs: itemsadder:dmc:MythicLegs 1 type:37
+    SamuraiLegs: itemsadder:dmc:RareMythicLegs 1 type:37
+  MythicBoots:
+    DefaultBoots: itemsadder:dmc:MythicBoots 1 type:36
+    SamuraiBoots: itemsadder:dmc:RareMythicBoots 1 type:36
+##########################################################
+
+
+Set-of-items-Groups: #whole set of group will be given
+  pvpOnIronArmor:
+    - MyCustomSwordSkins
+    - CustomHats
+    - CustomChestPlates
+    - CustomLeggings
+    - CustomBoots
+  pvpOnMythicItems:
+    - MythicSwordSkins
+    - MythicHats
+    - MythicChestPlates
+    - MythicLeggings
+    - MythicBoots

@@ -1,0 +1,17 @@
+name: PvPZones
+version: '${project.version}'
+main: org.mrdarkimc.pvpzones.PvPZones
+api-version: '1.17'
+author: MrDarkiMC
+softdepend: [WorldGuard, ItemsAdder, LuckPerms]
+commands:
+  pvz:
+    usage: /pvz reload
+    description: info
+    permission: pvpzones.admin
+    permission-message: "You are not allowed to use this command"
+permissions:
+  pvpzones.wear.*:
+    default: false
+  pvpzones.group.*:
+    default: false
