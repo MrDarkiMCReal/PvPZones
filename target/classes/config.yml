@@ -75,7 +75,7 @@ Single-Item-Groups:
     KatanaSword: IRON_SWORD 1 type:0 modeldata:12345
   CustomHats:
     DefaultHat: AIR 1 type:39
-    SamuraiHat: IRON_HELMET 1 type:39 modeldata:12345
+    SamuraiHat: IRON_HELMET 1 type:39 modeldata:12345 protection:5 blast_protection:5 durability:5
   CustomChestPlates:
     DefaultChest: IRON_CHESTPLATE 1 type:38
     SamuraiChest: IRON_CHESTPLATE 1 type:38 modeldata:12345

@@ -3,7 +3,10 @@ package org.mrdarkimc.pvpzones;
 
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.util.*;
@@ -98,7 +101,11 @@ public class Utils {
                 String stringItem = getPlugin().getConfig().getString("Single-Item-Groups." + item + "." + key);
                 String perms = "pvpzones.wear." + item + "." + key;
                 if (player.hasPermission(perms)) {
-                    equipment.iaItemSetter(player, getItemNameOfItemString(stringItem), getAmountOfItemString(stringItem), getTypeOfItemString(stringItem), getModelDataOfItemString(stringItem));
+                    if (stringItem.startsWith("itemsadder")){
+                        equipment.iaItemSetter(player, getItemNameOfItemString(stringItem), getAmountOfItemString(stringItem), getTypeOfItemString(stringItem), getModelDataOfItemString(stringItem));
+                    }else {
+                        equipment.iaItemSetter(player, createItem(stringItem), getTypeOfItemString(stringItem));
+                    }
                 }
             }
         }
@@ -116,6 +123,24 @@ public class Utils {
             throw new IllegalArgumentException("Error with item type. Specify slot");
 
         }
+    }
+    public ItemStack createItem(String stringitem){
+        String[] array = stringitem.split(" ");
+        Material material = Material.valueOf(array[0]);
+        int amount = Integer.parseInt(array[1]);
+        ItemStack stack = new ItemStack(material,amount);
+        ItemMeta meta = stack.getItemMeta();
+        for (int i = 2; i < array.length; i++) {
+            String[] param = array[i].split(":");
+            if (param.length != 2) continue;
+            Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString(param[0]));
+            //Enchantment enchantments = Registry.ENCHANTMENT.get(NamespacedKey.fromString(param[0]));
+            if (enchantment !=null){
+                meta.addEnchant(enchantment,Integer.parseInt(param[1]),true);
+            }
+            stack.setItemMeta(meta);
+        }
+        return stack;
     }
     private int getModelDataOfItemString(String args) {
         Pattern pattern = Pattern.compile("modeldata:(\\d+)");

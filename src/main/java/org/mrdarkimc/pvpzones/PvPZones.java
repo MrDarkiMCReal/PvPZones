@@ -1,12 +1,6 @@
 package org.mrdarkimc.pvpzones;
 
 
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.managers.RegionManager;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import com.sk89q.worldguard.protection.regions.RegionContainer;
 import dev.lone.itemsadder.api.Events.ItemsAdderLoadDataEvent;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -15,14 +9,13 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mrdarkimc.pvpzones.hooks.ItemsAdderHook;
+import org.mrdarkimc.pvpzones.hooks.LuckPermsHook;
+import org.mrdarkimc.pvpzones.hooks.WorldGuardHook;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 
 public final class PvPZones extends JavaPlugin implements Listener {
@@ -33,7 +26,7 @@ public final class PvPZones extends JavaPlugin implements Listener {
     boolean isWorldGuardEnable = false;
     boolean isLuckPermsEnable = false;
     LuckPermsHook LpHook;
-    Utils getUtils() {
+    public Utils getUtils() {
         return utils;
     }
 
@@ -61,6 +54,7 @@ public final class PvPZones extends JavaPlugin implements Listener {
         }
         if (getServer().getPluginManager().getPlugin("ItemsAdder") != null){
             isItemsAdderEnabled=true;
+            getServer().getPluginManager().registerEvents(new ItemsAdderHook(),this);
         }
         if (getServer().getPluginManager().getPlugin("WorldGuard") != null){
             isWorldGuardEnable=true;
@@ -228,8 +222,5 @@ public final class PvPZones extends JavaPlugin implements Listener {
 //        player.sendMessage("getPath output: " + path);
 //        return path; //"items.myCustomChestPlate.itemname"
 //    }
-    @EventHandler
-    public void iaChecker(ItemsAdderLoadDataEvent event) {
-    }
 
 }

@@ -2,6 +2,7 @@ org\mrdarkimc\pvpzones\Equipment.class
 org\mrdarkimc\pvpzones\Killstreak.class
 org\mrdarkimc\pvpzones\PvPZones.class
 org\mrdarkimc\pvpzones\Utils.class
-org\mrdarkimc\pvpzones\LuckPermsHook.class
+org\mrdarkimc\pvpzones\hooks\ItemsAdderHook.class
+org\mrdarkimc\pvpzones\hooks\LuckPermsHook.class
+org\mrdarkimc\pvpzones\hooks\WorldGuardHook.class
 org\mrdarkimc\pvpzones\Commands.class
-org\mrdarkimc\pvpzones\WorldGuardHook.class

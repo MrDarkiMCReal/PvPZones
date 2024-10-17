@@ -1,4 +1,4 @@
-package org.mrdarkimc.pvpzones;
+package org.mrdarkimc.pvpzones.hooks;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.mrdarkimc.pvpzones.PvPZones;
 
 import java.util.Set;
 import java.util.stream.Collectors;

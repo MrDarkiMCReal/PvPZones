@@ -1,4 +1,4 @@
-package org.mrdarkimc.pvpzones;
+package org.mrdarkimc.pvpzones.hooks;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
+import org.mrdarkimc.pvpzones.PvPZones;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,6 +1,7 @@
 package org.mrdarkimc.pvpzones;
 
 import dev.lone.itemsadder.api.CustomStack;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -104,8 +105,12 @@ public class Equipment {
 //        iaItemSetter(player, "dmc:leave-item",8);
 //        player.getInventory().setHeldItemSlot(0);
 //    }
+public void iaItemSetter(Player player, ItemStack itemStack, int slot) {
+    player.getInventory().setItem(slot, itemStack);
+}
+
     public void iaItemSetter(Player player, String iaItem, int amount, int slot, int modeldata) {
-        if (iaItem.contains("itemsadder:") && PvPZones.getInstance().isItemsAdderEnabled)
+        if (PvPZones.getInstance().isItemsAdderEnabled)
 
         {
             String iaItem2 = iaItem.replaceAll("itemsadder:", "");
@@ -122,6 +127,7 @@ public class Equipment {
             else player.sendMessage(ChatColor.RED + "Item " + iaItem2 + " is not valid for ItemsAdder. Contact an admin.");
         }
         else {
+            Bukkit.getLogger().info(ChatColor.RED +  "PVPZONES cannot equip ItemsAdder item.(Maybe ItemsAdder is disabled in config?) Trying to convent it to minecraft item.");
             if (Material.matchMaterial(iaItem) != null) {
                 ItemStack defaultStack = new ItemStack(Material.valueOf(iaItem), amount);
                 if (!(modeldata == 0)) {
