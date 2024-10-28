@@ -1,7 +1,6 @@
 package org.mrdarkimc.pvpzones;
 
 
-import dev.lone.itemsadder.api.Events.ItemsAdderLoadDataEvent;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;

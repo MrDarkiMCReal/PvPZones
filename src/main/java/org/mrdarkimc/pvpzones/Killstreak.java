@@ -9,14 +9,10 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Stream;
 import java.lang.Integer;
 import java.util.Set;
-import java.util.TreeSet;
-import java.util.Comparator;
 
 public class Killstreak {
-    Utils utils = new Utils();
     private FileConfiguration killstreakFile;
     private File killstreakFilePath;
 
