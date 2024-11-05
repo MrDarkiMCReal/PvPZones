@@ -9,12 +9,21 @@
 #For any help join discord
 #
 location:
-  world: "pvp_world" #world to pvp (only in this world instant respawn and   gonna work)
+  world: "pvp_world" #world to pvp (only in this world instant respawn and items switcher gonna work)
   x: 20 #respawning coords
   y: 25 #respawning coords
   z: 30 #respawning coords
   yaw: 0.0 #respawning direction
   pitch: 0.0 #respawning direction
+#you need to set this to prevent player to lose their items if server crashes while players were on arena
+#teleports when player joining server after crash
+JoiningLocation:
+  world: world_nether
+  x: 20
+  y: 25
+  z: 30
+  yaw: 0.0
+  pitch: 0.0
 Worldguard:
   regionToEquip: "pvp-arena"
 killstreak:
@@ -35,6 +44,9 @@ messages:
   playerLeavePvPArea:
     enable: true
     message: "You have left pvp area"
+  playerEnterPvPArea:
+    enable: true
+    message: "You have enter pvp area"
   killstreak:
     5: "Player %killer% is on rampage with streak of: %killstreak%"
     10: "HOLLY COW, %killer% is DOMINATING with streak of: %killstreak%"

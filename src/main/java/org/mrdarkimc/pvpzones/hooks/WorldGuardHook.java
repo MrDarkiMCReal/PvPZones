@@ -9,42 +9,57 @@ import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.plugin.Plugin;
+import org.mrdarkimc.pvpzones.Equipment;
+import org.mrdarkimc.pvpzones.ItemsSwitcher;
 import org.mrdarkimc.pvpzones.PvPZones;
+import org.mrdarkimc.pvpzones.Utils;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class WorldGuardHook implements Listener {
     public WorldGuardHook() {
+        this.switcher = PvPZones.getInstance().switcher;
+        this.equipment = PvPZones.getInstance().equipment;
     }
-
-    private final Set<String> equippedPlayers = new HashSet<>();
+    Equipment equipment;
+    ItemsSwitcher switcher;
+    public static final Set<String> equippedPlayers = new HashSet<>();
+    @EventHandler
+    public void JoinEvent(PlayerJoinEvent e){
+        Player player = e.getPlayer();
+        if (!equippedPlayers.contains(player.getName())) {
+            if (switcher.getFromConfig(player) != null) {
+                player.teleport(Utils.arenaLocation());
+                switcher.giveInvBack(player);
+            }
+        }
+    }
 
     @EventHandler
     public void playerEntersRegion(PlayerMoveEvent event) {
-        if (event.getPlayer().getWorld().getName().equalsIgnoreCase(PvPZones.getInstance().getConfig().getString("location.world"))) {
+        Player player = event.getPlayer();
+        if (player.getWorld().getName().equalsIgnoreCase(PvPZones.getInstance().getConfig().getString("location.world"))) {
             String pvpLocation = PvPZones.getInstance().getConfig().getString("Worldguard.regionToEquip");
-            if (isInRegion(event.getFrom(), pvpLocation) && !equippedPlayers.contains(event.getPlayer().getName())) {
-                equippedPlayers.add(event.getPlayer().getName());
-                PvPZones.getInstance().getUtils().setGroups(event.getPlayer());
+            if (isInRegion(event.getFrom(), pvpLocation) && !equippedPlayers.contains(player.getName())) {
+            equipment.engagePlayer(player);
             }
-            if (!isInRegion(event.getFrom(), pvpLocation) && equippedPlayers.contains(event.getPlayer().getName())) {
-                equippedPlayers.remove(event.getPlayer().getName());
-                event.getPlayer().getInventory().clear();
-                if (PvPZones.getInstance().getConfig().getBoolean("messages.playerLeavePvPArea.enable")) {
-                    event.getPlayer().sendMessage(PvPZones.getInstance().getUtils().translateHex(PvPZones.getInstance().getConfig().getString("messages.playerLeavePvPArea.message")));
-                }
+            if (!isInRegion(event.getFrom(), pvpLocation) && equippedPlayers.contains(player.getName())) {
+                equipment.disEngage(player);
             }
 
         }
     }
 
     public boolean isInRegion(Location fromLocation, String regionToEquip) {
+        //todo сделать в асинке?
+        //а если этот метод асинхронный, будет ли зависать лисенер ожидая результат?
+        //можно не метод сделать асинком, а когда вызываешь isInRg сделать асинк
         World world = fromLocation.getWorld();
         RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
         com.sk89q.worldedit.world.World adaptedworld = BukkitAdapter.adapt(world);
@@ -76,7 +91,7 @@ public class WorldGuardHook implements Listener {
                 event.getPlayer().teleport(tplocation);
                 equippedPlayers.remove(event.getPlayer().getName());
                 if (PvPZones.getInstance().getConfig().getBoolean("messages.playerLeavePvPArea.enable")) {
-                    event.getPlayer().sendMessage(PvPZones.getInstance().getUtils().translateHex(PvPZones.getInstance().getConfig().getString("messages.playerLeavePvPArea.message")));
+                    event.getPlayer().sendMessage(org.mrdarkimc.Utils.translateHex(PvPZones.getInstance().getConfig().getString("messages.playerLeavePvPArea.message")));
                 }
             }
         }

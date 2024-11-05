@@ -19,8 +19,12 @@ public class Utils {
     public static Plugin getPlugin() {
     return PvPZones.getInstance();
     }
-    Equipment equipment = new Equipment();
-    private Location arenaLocation() {
+    Equipment equipment = PvPZones.getInstance().equipment;
+
+    public Utils() {
+    }
+
+    public static Location arenaLocation() {
         String worldString = getPlugin().getConfig().getString("location.world");
         World world = getPlugin().getServer().getWorld(worldString);
         float x = Float.parseFloat(getPlugin().getConfig().getString("location.x"));

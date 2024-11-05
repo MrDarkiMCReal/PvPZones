@@ -7,13 +7,17 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-
-
+import org.mrdarkimc.pvpzones.hooks.WorldGuardHook;
 
 
 public class Equipment {
-//    private PvPZones getPvPZones (){
+    ItemsSwitcher switcher;
+
+    public Equipment() {
+        this.switcher = PvPZones.getInstance().switcher;
+    }
+
+    //    private PvPZones getPvPZones (){
 //        return PvPZones.getInstance();
 //    }
 //    public void setWeapon (Player player) {
@@ -108,7 +112,29 @@ public class Equipment {
 public void iaItemSetter(Player player, ItemStack itemStack, int slot) {
     player.getInventory().setItem(slot, itemStack);
 }
+    public void engagePlayer(Player player){
+        switcher.saveInv(player);
+        player.getInventory().clear();
+        if (PvPZones.getInstance().isWorldGuardEnable){
 
+            WorldGuardHook.equippedPlayers.add(player.getName());
+        }
+        if (PvPZones.getInstance().getConfig().getBoolean("messages.playerEnterPvPArea.enable")) {
+            player.sendMessage(org.mrdarkimc.Utils.translateHex(PvPZones.getInstance().getConfig().getString("messages.playerEnterPvPArea.message")));
+        }
+        PvPZones.getInstance().getUtils().setGroups(player);
+        player.getInventory().setHeldItemSlot(1);
+    }
+    public void disEngage(Player player){
+        if (PvPZones.getInstance().isWorldGuardEnable) {
+            WorldGuardHook.equippedPlayers.remove(player.getName());
+        }
+        player.getInventory().clear();
+        switcher.giveInvBack(player);
+        if (PvPZones.getInstance().getConfig().getBoolean("messages.playerLeavePvPArea.enable")) {
+            player.sendMessage(Utils.translateHex(PvPZones.getInstance().getConfig().getString("messages.playerLeavePvPArea.message")));
+        }
+    }
     public void iaItemSetter(Player player, String iaItem, int amount, int slot, int modeldata) {
         if (PvPZones.getInstance().isItemsAdderEnabled)
 

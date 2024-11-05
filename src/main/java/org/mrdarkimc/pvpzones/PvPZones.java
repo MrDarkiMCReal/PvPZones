@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mrdarkimc.Configs;
 import org.mrdarkimc.pvpzones.hooks.ItemsAdderHook;
 import org.mrdarkimc.pvpzones.hooks.LuckPermsHook;
 import org.mrdarkimc.pvpzones.hooks.WorldGuardHook;
@@ -19,8 +20,11 @@ import java.io.IOException;
 
 public final class PvPZones extends JavaPlugin implements Listener {
     private static PvPZones instance;
-    Utils utils = new Utils();
+    public Utils utils;
+    public ItemsSwitcher switcher;
+    public Equipment equipment;
     static Killstreak killstreak;
+    public static Configs savedItems;
     boolean isItemsAdderEnabled = false;
     boolean isWorldGuardEnable = false;
     boolean isLuckPermsEnable = false;
@@ -35,8 +39,13 @@ public final class PvPZones extends JavaPlugin implements Listener {
         getServer().getLogger().info("§x§4§0§8§1§8§A[PvPZonePlus] §x§9§3§C§0§C§6is enabled and ready to run");
         getServer().getPluginManager().registerEvents(this, this);
         instance = this;
+        this.switcher =  new ItemsSwitcher();
+        this.equipment = new Equipment();
+        this.utils = new Utils();
         getServer().getPluginCommand("pvz").setExecutor(new Commands());
         File file = new File(getDataFolder(), "config.yml");
+        savedItems = new Configs(this,"savedItems");
+        org.mrdarkimc.Utils.startUp("PvPZones");
         {
         }
         if (!file.exists()) {
@@ -73,15 +82,7 @@ public final class PvPZones extends JavaPlugin implements Listener {
     public void onDisable() {
         getServer().getLogger().info("[PvPZones] is shutting down");
         instance = null;
-//        utils.removeServerPermission();
     }
-
-    //    @EventHandler
-//    public void joinsEvent(PlayerJoinEvent event) {
-//        Player player = event.getPlayer();
-//        player.sendMessage(ChatColor.BLUE + "Привет, " + ChatColor.DARK_BLUE + player);
-//
-//    }
     @EventHandler
     public void onDamageCheck(EntityDamageByEntityEvent event) {
         String world = getConfig().getString("location.world");
